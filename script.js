@@ -9,7 +9,18 @@ map.src = './img/fishTown.png'
 const playerImage = new Image()
 playerImage.src = './img/playerDown.png'
 
-map.onload = () => {
+class Sprite {
+    constructor({
+        position,
+        velocity
+    }) {
+        this.position = position
+    }
+}
+
+
+function animate() {
+    requestAnimationFrame(animate)
     ctx.drawImage(map, -350, -750)
     ctx.drawImage(playerImage, 
         0,
@@ -21,7 +32,23 @@ map.onload = () => {
         playerImage.width/4,
         playerImage.height)
 }
+animate()
 
-addEventListener('keydown', ({key}) => {
-    console.log(key)
-})
+// addEventListener('keydown', ({key}) => {
+//     console.log(key)
+//     switch (key) {
+//         case: 'w':
+
+//         break
+//         case: 'a':
+
+//         break
+//         case: 's':
+
+//         break
+//         case: 'd':
+
+//         break
+
+//     }
+// })
