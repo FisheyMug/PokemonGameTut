@@ -4,12 +4,12 @@ const ctx = canvas.getContext('2d')
 canvas.width = 1024
 canvas.height = 576
 
-console.log(collisions);
 
 const collisionsMap = []
 for (let i = 0; i < collisions.length; i+=70) {
     collisionsMap.push(collisions.slice(i, 70 + i))
 }
+
 
 const offset = {
     x: -350,
@@ -35,10 +35,12 @@ const boundaries = []
 
 collisionsMap.forEach ((row, i) => {
     row.forEach((symbol, j) => {
-        if (symbol = 1025) {
-            boundaries.push(new Boundary({position: {
-                x:j * Boundary.width + offset.x,
-                y:i * Boundary.height + offset.y
+        if (symbol === 1025) {
+            boundaries.push(
+                new Boundary({
+                    position: {
+                        x: j * Boundary.width + offset.x,
+                        y: i * Boundary.height + offset.y
             }}))
         }
        
@@ -61,7 +63,7 @@ class Sprite {
     }
 }
 
-
+const test = new Boundary({position:{x: offset.x, y:offset.y}})
 
 const background = new Sprite({
     position: {
@@ -87,14 +89,24 @@ const keys = {
 }
 let lastKey = '';
 
+const getCursorPosition = (canvas, event) => {
+    const x = event.offsetX
+    const y = event.offsetY
+    console.log(x, y)
+  }
+
+  canvas.addEventListener('mousedown', (e) => {
+    getCursorPosition(canvas, e)
+  })
 
 function animate() {
     requestAnimationFrame(animate)
     background.draw()
-    boundaries.forEach( boundary => {
-        console.log('draw')
+ 
+    boundaries.forEach(boundary => {
         boundary.draw()
     })
+
     ctx.drawImage(playerImage, 
         0,
         0,
@@ -107,10 +119,10 @@ function animate() {
         )
     
     
-    if (keys.w.pressed && lastKey === 'w') background.position.y += 3
-    else if (keys.a.pressed && lastKey === 'a') background.position.x += 3
-    else if (keys.s.pressed && lastKey === 's') background.position.y -= 3
-    else if (keys.d.pressed && lastKey === 'd') background.position.x -= 3
+    if (keys.w.pressed && lastKey === 'w') background.position.y += 10
+    else if (keys.a.pressed && lastKey === 'a') background.position.x += 10
+    else if (keys.s.pressed && lastKey === 's') background.position.y -= 10
+    else if (keys.d.pressed && lastKey === 'd') background.position.x -= 10
 
 
     
