@@ -19,7 +19,7 @@ const offset = {
 class Boundary {
     static width = 48
     static height = 48
-    constructor(position) {
+    constructor({position}) {
         this.position = position
         this.width = 48
         this.height = 48
@@ -63,7 +63,6 @@ class Sprite {
     }
 }
 
-const test = new Boundary({position:{x: offset.x, y:offset.y}})
 
 const background = new Sprite({
     position: {
@@ -93,11 +92,15 @@ const getCursorPosition = (canvas, event) => {
     const x = event.offsetX
     const y = event.offsetY
     console.log(x, y)
-  }
+}
 
-  canvas.addEventListener('mousedown', (e) => {
+canvas.addEventListener('mousedown', (e) => {
     getCursorPosition(canvas, e)
-  })
+})
+
+//allows many movables in game without duplicating code
+const movables =[background, boundaries];
+
 
 function animate() {
     requestAnimationFrame(animate)
@@ -119,10 +122,25 @@ function animate() {
         )
     
     
-    if (keys.w.pressed && lastKey === 'w') background.position.y += 10
-    else if (keys.a.pressed && lastKey === 'a') background.position.x += 10
-    else if (keys.s.pressed && lastKey === 's') background.position.y -= 10
-    else if (keys.d.pressed && lastKey === 'd') background.position.x -= 10
+    if (keys.w.pressed && lastKey === 'w') {
+        movables.forEach((movable) =>{
+        movable.position.y +=3
+        })
+    } else if (keys.a.pressed && lastKey === 'a') {
+        movables.forEach((movable) =>{
+            movable.position.x +=3
+        })
+    }
+    else if (keys.s.pressed && lastKey === 's') {
+        movables.forEach((movable) =>{
+            movable.position.y -=3
+        })
+    }
+    else if (keys.d.pressed && lastKey === 'd') {
+        movables.forEach((movable) =>{
+            movable.position.x -=3
+        })
+    }
 
 
     
